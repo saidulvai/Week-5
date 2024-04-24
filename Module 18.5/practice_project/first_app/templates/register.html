@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+    
+    <form style="width: 50%;margin: auto;" method="post" novalidate>
+        <h1>{{type}} page</h1>
+        {% csrf_token %}
+        <!-- {{form}} -->
+        {% for field in form %}
+        <div>
+            <strong>{{field.label_tag}}</strong>
+        </div>
+        {{field}}
+        <div>
+            <small class="text-danger">{{field.errors | striptags}}</small>
+        </div>
+    {% endfor %}
+        <button class="btn btn-primary p-2 m-2" type="submit">Submit</button>
+    </form>
+{% endblock content %}

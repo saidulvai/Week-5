@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-6">
+            <h1 class="fw-bold bg-warning m-2 p-2">Welcome To Our CarMart</h1>
+            <h5 class="p-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel eius dolores illo voluptas quisquam eaque voluptate culpa voluptatibus impedit, neque ratione maxime enim pariatur nam reprehenderit quidem illum saepe eos, quasi accusantium sequi optio. Vitae beatae at quam harum corrupti velit quod blanditiis tempora eveniet ex. Nihil, esse. Voluptate, ad!</h5>
+        </div>
+        <div class="col-md-6">
+            <img src="{% static 'images/images11.jpg' %}" alt="img">
+        </div>
+    </div>
+    <div class="row my-4">
+            <div class="d-flex">
+               <h3>Brands: </h3>
+            {% for brand in brands %}
+                <div class="">
+                    <a class="text-decoration-none btn btn-primary mx-2" href="{% url "brand_wise_car" brand.slug %}">{{brand}}</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <h3>Total Car Found : {{cars|length}}</h3>
+        {% for car in cars %}
+        <div class="col-md-4">
+            <div class="card border-0 shadow-lg p-3 mb-5 bg-white rounded">
+                <img src="{{ car.image.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{car.name}}</h5>
+                    <p class="card-text">{{car.description | truncatewords:10 }}</p>
+                    <a href="{% url "car_details" car.id %}" class="btn btn-info">view details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

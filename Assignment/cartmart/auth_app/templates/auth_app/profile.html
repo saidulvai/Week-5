@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block page_title %}Profile Page{% endblock page_title %}
+
+{% block content %}
+<div class="text-center">
+  <div class="d-flex justify-content-end align-items-center gap-2">
+    <a href="{% url "edit_profile" request.user.id %}">
+      <button class="btn btn-primary mt-4">Edit Profiles</button>
+    </a>
+   
+  </div>
+  <div>
+    <h3 class="text-start">Hello, Mr./Mrs <strong class="text-success">{{request.user.first_name}} {{request.user.last_name}}</strong> your Order history</h3>
+    {% if orders|length > 0 %}
+      <table class="table table-hover p-3 mb-5 mr-5">
+      <thead>
+        <tr>
+          <th scope="col">Sl.no</th>
+          <th scope="col">Customer Name</th>
+          <th scope="col">User email</th>
+          <th scope="col">Car Name</th>
+          <th scope="col">Car id</th>
+          <th scope="col">Car Quantity</th>
+          <th scope="col">Car price</th>
+          <th scope="col">Order Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{order.user.first_name}} {{order.user.last_name}}</td>
+          <td>{{order.user.email}}</td>
+          <td>{{order.car.name}}</td>
+          <td>{{order.car.id}}</td>
+          <td>{{order.quantity}}</td>
+          <td>{{order.car.price}}</td>
+          <td>{{ order.ordered_on}}</td>
+  
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="text-danger">You haven't order any Car yet.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}

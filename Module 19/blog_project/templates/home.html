@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container d-flex flex-wrap justify-content-center align-items-center">
+  <div class="col-6 ">
+    <h1>Welcom to Django Blog</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque modi tempore repudiandae debitis laboriosam esse accusantium deserunt harum, aliquid atque sequi architecto aperiam, incidunt eligendi eaque ipsa delectus necessitatibus laudantium? Dolorum accusamus qui optio saepe id consequuntur! Voluptatibus recusandae aperiam unde sunt corporis, libero maxime consequuntur itaque error architecto explicabo quia atque at hic sit. Necessitatibus fugit iusto autem architecto, deserunt, corrupti magnam, quas possimus ducimus provident vel harum magni ratione earum non libero sed dicta numquam accusamus modi. Eveniet odio facilis atque omnis eaque quisquam deleniti ea alias dignissimos impedit vitae corporis vero sint voluptas distinctio, reiciendis sed commodi.</p>
+  </div>
+  <div class="col-6">
+    <img class="p-5" src="{% static 'header.jpg' %}" alt="">
+  </div>
+</div>
+
+<div class="container d-flex flex-wrap p-5">
+  <div class="col-2 p-4 bg-white">
+    <h5>All Categories</h5>
+    {% for i in category %}
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="category" id="{{i.id}}">
+      <label class="form-check-label" for="{{i.id}}">
+        
+        <a href="{% url 'category_wise_post' i.slug %}" class="text-decoration-none text-dark">{{i.name}}</a>
+      </label>
+    </div>
+    {% endfor %}
+    
+  </div>
+
+  <div class="col-10 px-5">
+    <h3>{{data | length}} result found</h3>
+    <div class="d-flex flex-wrap">
+      
+      {% for post in data %}
+      <div class="col-sm-3">
+       <div class="card mx-2">
+         <div class="card-body">
+           <h5 class="card-title"><a class="text-decoration-none text-dark" href="{% url 'detail_post' post.id %}">{{post.title}}</a></h5>
+           <p class="card-text">{{post.content|truncatewords:10}}.</p>
+           <p>Author : {{post.author.first_name}} {{post.author.last_name}}</p>
+           <p>Category: {% for cate in post.category.all %}
+               <button class="btn btn-primary btn-sm m-2" disabled>{{cate.name}}</button>
+               {% endfor %}</p>
+         </div>
+       </div>
+     </div>
+      {% endfor %}
+   </div>
+  </div>
+</div>
+
+{% endblock  %}
